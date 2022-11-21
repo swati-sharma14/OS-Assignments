@@ -32,7 +32,7 @@ void* countC(){
 
 int main(){
 
-    p1.sched_priority = 1;
+    p1.sched_priority = 0;
     p2.sched_priority = 1;
     p3.sched_priority = 1;
     struct timespec start1, stop1, start2, stop2, start3, stop3; 
@@ -50,7 +50,7 @@ int main(){
     clock_gettime( CLOCK_REALTIME, &stop1);
 
     pthread_join(t2, NULL);
-    clock_gettime( CLOCK_REALTIME, &stop1);
+    clock_gettime( CLOCK_REALTIME, &stop2);
 
     clock_gettime( CLOCK_REALTIME, &stop3);
     pthread_join(t3, NULL);
