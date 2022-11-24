@@ -4,6 +4,7 @@
 #include <sched.h>
 #include <time.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 
 struct sched_param p1,p2,p3;
 
