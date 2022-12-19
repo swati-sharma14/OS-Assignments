@@ -30,30 +30,6 @@ int main(){
 
     int sent = 0;
     for(int i=0;i<10;i++){
-        int fd = open("fifa", O_WRONLY);
-        if(fd == -1){
-            perror("File opening failed\n");
-            exit(0);
-        }
-        char* str = malloc(50*sizeof(char));
-        for(int j=sent; j<sent+5;j++){
-            char ind[3];
-            if(j<10){
-                ind[0] = '0';
-                ind[1] = (char) ('0' + j);
-            }
-            else{
-                ind[0] = (char) ('0' + j/10);
-                ind[1] = (char) ('0' + j%10);
-            }
-            ind[2] = '\0';
-            strcat(str,ind);
-            strcat(str,arr[j]);
-        }
-        
-        int nm = write(fd, str, strlen(str));
-        close(fd);
-
         pid_t pid = fork();
         if(pid<0){
             perror("fork error");
@@ -64,15 +40,34 @@ int main(){
             exit(EXIT_SUCCESS);
         }
         else{
-            
-            fd = open("fifa", O_RDONLY);
+            int fd = open("fifa", O_WRONLY);
             if(fd == -1){
                 perror("File opening failed\n");
                 exit(0);
             }
+            char* str = malloc(50*sizeof(char));
+            for(int j=sent; j<sent+5;j++){
+                char ind[3];
+                if(j<10){
+                    ind[0] = '0';
+                    ind[1] = (char) ('0' + j);
+                }
+                else{
+                    ind[0] = (char) ('0' + j/10);
+                    ind[1] = (char) ('0' + j%10);
+                }
+                ind[2] = '\0';
+                strcat(str,ind);
+                strcat(str,arr[j]);
+            }
+            str[strlen(str)] = '\0';
 
-            if(nm ==  (-1)){
-                perror("Write");
+            int nm = write(fd, str, strlen(str));
+            close(fd);
+            fd = open("fifa", O_RDONLY);
+            if(fd == -1){
+                perror("File opening failed\n");
+                exit(0);
             }
             char received[3];
             int num = read(fd, received, 2);
