@@ -61,7 +61,8 @@ int main(){
                 strcat(str,ind);
                 strcat(str,arr[j]);
             }
-            sent+=j-1;
+            sent+=5;
+            if(sent==5) sent--;
             str[strlen(str)] = '\0';
 
             int nm = write(fd, str, strlen(str));
