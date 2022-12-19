@@ -35,7 +35,7 @@ int main(){
             perror("File opening failed\n");
             exit(0);
         }
-        char* str;
+        char* str = malloc(50*sizeof(char));
         for(int j=sent; j<sent+5;j++){
             char ind[3];
             if(j<10){
