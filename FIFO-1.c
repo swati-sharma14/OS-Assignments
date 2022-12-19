@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <fcntl.h>
+
 
 char* generate(){
     char *send = (char *) malloc(6*sizeof(char));
