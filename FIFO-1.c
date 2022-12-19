@@ -78,9 +78,7 @@ int main(){
             bc = (10*((int)(received[0] - '0')));
             bc += (int)(received[1] - '0');
 
-            if(sent != bc){
-                perror("Bleh");
-            }
+            printf("%i %i\n",sent,bc);
             sent = bc;
             close(fd);
             sent++;
