@@ -53,4 +53,5 @@ int main(){
         int nmu = write(fd1, highest, strlen(highest));
         close(fd1);
     }
+    // s
 }
