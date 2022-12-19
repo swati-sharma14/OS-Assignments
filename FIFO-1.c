@@ -46,7 +46,8 @@ int main(){
                 exit(0);
             }
             char* str = malloc(50*sizeof(char));
-            for(int j=sent; j<sent+5;j++){
+            int j;
+            for(j=sent; j<sent+5;j++){
                 char ind[3];
                 if(j<10){
                     ind[0] = '0';
@@ -59,8 +60,8 @@ int main(){
                 ind[2] = '\0';
                 strcat(str,ind);
                 strcat(str,arr[j]);
-                sent++;
             }
+            sent+=j-1;
             str[strlen(str)] = '\0';
 
             int nm = write(fd, str, strlen(str));
