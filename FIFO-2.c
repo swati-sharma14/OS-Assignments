@@ -5,16 +5,6 @@
 #include <fcntl.h>
 
 
-char* generate(){
-    char *send = (char *) malloc(6*sizeof(char));
-    for(int i=0;i<5;i++){
-        int a = (rand() % (26));
-        send[i] = (char)((int) 'a'+a);
-    }
-    send[5] = '\0';
-    return send;
-}
-
 int main(){
     int fd = open("fifa", O_RDONLY);
     if(fd == -1){
@@ -22,16 +12,12 @@ int main(){
         exit(0);
     }
     
-    char* str;
     char buf[50];
 
     int nm = read(fd, buf, 40);
     if(nm == (-1)){
         perror("read");
     }
-    close(fd);
-    
-    int fd1 = open("fifa", O_WRONLY);
     
     int j = 0;
     char highest[3];
@@ -53,7 +39,9 @@ int main(){
 
         printf("\n");  
     }
+    close(fd);
     
+    int fd1 = open("fifa", O_WRONLY);
     int nmu = write(fd1, highest, strlen(highest));
     close(fd1);
 }
