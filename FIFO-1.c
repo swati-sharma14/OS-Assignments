@@ -59,6 +59,7 @@ int main(){
                 ind[2] = '\0';
                 strcat(str,ind);
                 strcat(str,arr[j]);
+                sent++;
             }
             str[strlen(str)] = '\0';
 
@@ -78,7 +79,9 @@ int main(){
             bc = (10*((int)(received[0] - '0')));
             bc += (int)(received[1] - '0');
 
-            printf("%i %i\n",sent,bc);
+            if(sent!=bc){
+                printf("indices dont match");
+            }
             sent = bc;
             close(fd);
             sent++;
