@@ -44,4 +44,6 @@ int main(){
     int fd1 = open("fifa", O_WRONLY);
     int nmu = write(fd1, highest, strlen(highest));
     close(fd1);
+    
+    printf("\n");
 }
