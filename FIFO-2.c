@@ -26,10 +26,12 @@ int main(){
     char buf[50];
 
     int nm = read(fd, buf, 40);
-    close(fd);
     if(nm == (-1)){
-        perror("Write");
+        perror("read");
     }
+    close(fd);
+    
+    int fd1 = open("fifa", O_WRONLY);
     
     int j = 0;
     char highest[3];
@@ -49,11 +51,9 @@ int main(){
             j++;
         }
 
-        printf("\n");
-
-        int fd1 = open("fifa", O_WRONLY);
-        int nmu = write(fd1, highest, strlen(highest));
-        close(fd1);
+        printf("\n");  
     }
-    // s
+    
+    int nmu = write(fd1, highest, strlen(highest));
+    close(fd1);
 }
