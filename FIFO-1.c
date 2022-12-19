@@ -80,9 +80,9 @@ int main(){
             bc = (10*((int)(received[0] - '0')));
             bc += (int)(received[1] - '0');
 
-            printf("%i %i",sent,bc);
+            printf("%i %i \n",sent,bc);
             if(sent!=bc){
-                printf("indices dont match");
+                printf("indices dont match\n");
             }
             sent = bc;
             close(fd);
