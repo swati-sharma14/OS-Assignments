@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/un.h>
 
 
 char* generate(){
@@ -21,7 +22,7 @@ int main(){
     char** arr = (char **) malloc(50*sizeof(char *));
     for(int i=0;i<50;i++){
         arr[i] = generate();
-        // printf("%s\n",arr[i]);
+//        printf("%s\n",arr[i]);
     }
 
     char *name = "./socketsocketsocketsocket";
@@ -35,14 +36,15 @@ int main(){
     struct sockaddr_un sock1;
     sock1.sun_family = AF_UNIX;
     strcpy(sock1.sun_path,name);
-    unlink(sock1.path);
-    int len = strlen(sock1.sun_path)+1 + sizeof(sock1.sun_family);
+    unlink(sock1.sun_path);
+    unsigned int len = strlen(sock1.sun_path)+1 + sizeof(sock1.sun_family);
+    
     int a = bind(rock, (struct sockaddr *)&sock1, len);
     if(a==-1){
         perror("Bind error");
         exit(0);
     }
-    if(listen(rock,2) == -1){
+    if(listen(rock,1) == -1){
         perror("Listen error");
         exit(0);
     }
@@ -62,13 +64,7 @@ int main(){
             execl("./p2",NULL);
             exit(EXIT_SUCCESS);
         }
-        else{
-            int s2 = accept(rock,&sock2,&len);
-            if(s2==-1){
-                perror("Accept");
-                exit(0);
-            }
-
+        else{ 
             char* str = malloc(50*sizeof(char));
             int j;
             for(j=sent; j<sent+5;j++){
@@ -87,16 +83,21 @@ int main(){
             }
             sent+=4;
             str[strlen(str)] = '\0';
+	    
+	    int s2 = accept(rock,(struct sockaddr *)&sock2,(socklen_t *)&len);
+            if(s2==-1){
+                perror("accept");
+                exit(0);
+            }
 
-
-            if(send(s2,str,len,0) <0){
+            if(send(s2,str,strlen(str)+1,0) <0){
                 perror("Send");
                 exit(0);
             }
 
             wait(NULL);
 
-            char* str;
+           
             char buf[3];
             
             if(recv(s2,buf,3,0) < 0){

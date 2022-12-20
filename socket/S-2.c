@@ -1,21 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <sys/types.h>
+#include <unistd.h>
 
 
-char* generate(){
-    char *send = (char *) malloc(6*sizeof(char));
-    for(int i=0;i<5;i++){
-        int a = (rand() % (26));
-        send[i] = (char)((int) 'a'+a);
-    }
-    send[5] = '\0';
-    return send;
-}
 
 
 int main(){
-    int rock = socket(AF_UNIX, SOCK_STREAM, 0);
+    int rock = socket(AF_UNIX, SOCK_STREAM, 0),s2;
     if(rock==-1){
         perror("Socket error");
         exit(0);
@@ -29,7 +24,7 @@ int main(){
 
     int len = strlen(sock1.sun_path) + 1 + sizeof(sock1.sun_family);
 
-    if(connect(rock,(struct sockaddr_un*)&sock1,len) == -1){
+    if(connect(rock,(struct sockaddr *)&sock1,len) == -1){
         perror("Connect");
         exit(0);
     }
@@ -37,7 +32,7 @@ int main(){
     char* str;
     char buf[50];
     
-    if(recv(s2,buf,40,0) <0){
+    if(recv(rock,buf,40,0) <0){
         perror("Receive");
         exit(0);
     }
@@ -63,11 +58,13 @@ int main(){
         printf("\n");
     }
 
-    if(send(s2, highest, 3, 0) < 0){
+    if(send(rock, highest, 3, 0) < 0){
         perror("Send");
         exit(0);
     }
 
     close(rock);
+    
+    printf("\n");
 
 }
