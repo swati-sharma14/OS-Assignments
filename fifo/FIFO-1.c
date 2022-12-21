@@ -3,6 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <time.h>
 
 
 char* generate(){
@@ -28,6 +29,7 @@ int main(){
         exit(0);
     }
 
+    clock_t t = clock();
     int sent = 0;
     for(int i=0;i<10;i++){
         pid_t pid = fork();
@@ -89,7 +91,8 @@ int main(){
             sent++;
         }
     }
-    // a
 
     unlink("fifa");
+    t = clock() - t;
+    printf("Time taken by fifo: %f ", t);
 }
