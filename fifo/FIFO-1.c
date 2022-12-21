@@ -18,6 +18,7 @@ char* generate(){
 
 int main(){
     char** arr = (char **) malloc(50*sizeof(char *));
+    struct timespec start,stop;
     for(int i=0;i<50;i++){
         arr[i] = generate();
         // printf("%s\n",arr[i]);
@@ -29,8 +30,7 @@ int main(){
         exit(0);
     }
 
-    clock_t t = clock();
-    int sent = 0;
+    clock_getttime(CLOCK_REALTIME, &start);    int sent = 0;
     for(int i=0;i<10;i++){
         pid_t pid = fork();
         if(pid<0){
@@ -93,6 +93,7 @@ int main(){
     }
 
     unlink("fifa");
-    t = clock() - t;
-    printf("Time taken by fifo: %f ", t);
+    clock_gettime(CLOCK_REALTIME,&stop);
+    
+    printf("Time taken by fifo: %i.%li seconds ", stop.tv_sec - start.tv_sec, stop.tv_nsec - start.tv_nsec);
 }
