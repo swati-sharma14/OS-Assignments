@@ -6,6 +6,7 @@
 #include <sys/socket.h>
 #include <sys/un.h>
 #include <time.h>
+#include <sys/wait.h>
 
 
 char* generate(){
@@ -20,6 +21,7 @@ char* generate(){
 
 
 int main(){
+    struct timespec start,stop;
     char** arr = (char **) malloc(50*sizeof(char *));
     for(int i=0;i<50;i++){
         arr[i] = generate();
@@ -54,6 +56,7 @@ int main(){
     len = sizeof(struct sockaddr_un);
     struct sockaddr_un sock2;
 
+    struct timespec start,stop;
     int sent = 0;
     clock_t t = clock();
     for(int i=0;i<10;i++){
@@ -122,6 +125,6 @@ int main(){
 
     close(rock);
     unlink(name);
-    t = clock() - t;
-    printf("Time taken by socket : %f ", t);
-}
+    clock_gettime(CLOCK_REALTIME,&stop);  
+    printf("Time taken by fifo: %i.%li seconds ", stop.tv_sec - start.tv_sec, stop.tv_nsec - start.tv_nsec);
+}   
