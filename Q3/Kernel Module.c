@@ -10,9 +10,9 @@ MODULE_AUTHOR("2021568");
 MODULE_DESCRIPTION("Kernel Module");
 
 module_param(pid, int,  S_IRUSR | S_IWUSR);
-int pid = getpid();
+int pid;
 
-static int start(void){
+static int __init start(void){
     struct task_struct *p = NULL;
     p = find_task_by_vpid(pid);
     if(p==NULL){
@@ -28,7 +28,7 @@ static int start(void){
 
 }
 
-static void exit(void){
+static void __exit exit(void){
     pr_debug("Bye :D \n");
 }
 
