@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/un.h>
+#include <time.h>
 
 
 char* generate(){
@@ -54,6 +55,7 @@ int main(){
     struct sockaddr_un sock2;
 
     int sent = 0;
+    clock_t t = clock();
     for(int i=0;i<10;i++){
         pid_t pid = fork();
         if(pid<0){
@@ -119,7 +121,7 @@ int main(){
     }
 
     close(rock);
-    // a
-
     unlink(name);
+    t = clock() - t;
+    printf("Time taken by socket : %f ", t);
 }
