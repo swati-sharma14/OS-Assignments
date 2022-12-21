@@ -30,7 +30,8 @@ int main(){
         exit(0);
     }
 
-    clock_getttime(CLOCK_REALTIME, &start);    int sent = 0;
+    clock_getttime(CLOCK_REALTIME, &start);    
+    int sent = 0;
     for(int i=0;i<10;i++){
         pid_t pid = fork();
         if(pid<0){
@@ -95,5 +96,5 @@ int main(){
     unlink("fifa");
     clock_gettime(CLOCK_REALTIME,&stop);
     
-    printf("Time taken by fifo: %i.%li seconds ", stop.tv_sec - start.tv_sec, stop.tv_nsec - start.tv_nsec);
+    printf("Time taken by fifo: %i.%li seconds \n ", stop.tv_sec - start.tv_sec, stop.tv_nsec - start.tv_nsec);
 }
