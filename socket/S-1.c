@@ -56,9 +56,9 @@ int main(){
     len = sizeof(struct sockaddr_un);
     struct sockaddr_un sock2;
 
-    struct timespec start,stop;
+    
     int sent = 0;
-    clock_t t = clock();
+    clock_gettime(CLOCK_REALTIME, &start);
     for(int i=0;i<10;i++){
         pid_t pid = fork();
         if(pid<0){
