@@ -5,6 +5,7 @@
 #include <string.h>
 #include <unistd.h>
 #include <time.h>
+#include <sys/wait.h>
 
 
 char* generate(){
@@ -18,6 +19,7 @@ char* generate(){
 }
 
 int main(){
+    struct timespace start,stop;
     char** arr = (char **) malloc(50*sizeof(char *));
     for(int i=0;i<50;i++){
         arr[i] = generate();
@@ -35,7 +37,7 @@ int main(){
         exit(0);
     }
 
-    clock_t t = clock();
+    clock_gettime(CLOCK_REALTIME, &start);    
     int sent = 0;
     for(int i=0;i<10;i++){
         pid_t pid = fork();
@@ -87,6 +89,7 @@ int main(){
     }
     shmdt(ptr);
     shmctl(shmid,IPC_RMID,NULL);
-    t = clock() - t;
-    printf("Time taken by shared memory: %f ", t);
+    clock_gettime(CLOCK_REALTIME,&stop);
+    
+    printf("Time taken by fifo: %i.%li seconds ", stop.tv_sec - start.tv_sec, stop.tv_nsec - start.tv_nsec);
 }
