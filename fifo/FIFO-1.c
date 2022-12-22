@@ -30,7 +30,7 @@ int main(){
         exit(0);
     }
 
-    clock_getttime(CLOCK_REALTIME, &start);    
+    clock_gettime(CLOCK_REALTIME, &start);    
     int sent = 0;
     for(int i=0;i<10;i++){
         pid_t pid = fork();

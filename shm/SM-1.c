@@ -19,7 +19,7 @@ char* generate(){
 }
 
 int main(){
-    struct timespace start,stop;
+    struct timespec start,stop;
     char** arr = (char **) malloc(50*sizeof(char *));
     for(int i=0;i<50;i++){
         arr[i] = generate();
